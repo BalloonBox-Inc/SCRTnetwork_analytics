@@ -28,9 +28,11 @@ SCRTSybil Architecture
 3. **Credit Score Module**: credit score algorithm integrating at least these 5 weighted metrics. Metrics were adapted from the factors used by the three largest American consumer credit reporting agencies: Equifax, Experian, and TransUnion.
 - Transaction History (txn counts + txn volume)
 - Number and types of bank accounts/wallets owned
-- Ratio of used liquidity / available liquidity for each account
-- Length of account history
-- Recent (last 21 days) account activity
+Ratio of used liquidity / available liquidity for each account
+
+Length of account history
+
+Recent (last 21 days) account activity
 
 A machine learning module will be built with SciKit-Learn Python library + Flask for web framework. Output score on 300-900 non-linear numerical scale with associated qualitative scale: Excellent/Good/Fair/Below average/Poor.
 
