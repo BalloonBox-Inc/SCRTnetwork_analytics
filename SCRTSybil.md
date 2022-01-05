@@ -3,11 +3,11 @@
 ## Project Description 
 Project name: SCRTSybil
 
-SCRTSybil is an oracle for credit score checks. The objective of SCRTSybil is to return a quantifiable, yet private and partially-encrypted credit score for SCRT network users allowing to categorize users by credibility and trustworthiness within the ecosystem. Credit checks will incentivize the activity of new, yet trusted and verified SCRT network users, while also affirming the reputation of long-standing users.
-Users will need to authenticate themselves via their Ledger or Keplr wallet to access the SCRTSybil Web2 app for starting the scoring process. After completing the necessary steps their score is computed and sent to a smart contract generator which packages their score alongside some basic information that will be encrypted when being published to the network. Users then have their ‘profiles’ stored and accessible on SCRT for anyone to request their credit score by specifying their public address as an identifier/primary key which binds the user account to their score and related attributes of the score. Various key types will decrypt different pieces of information about the users depending on who the score requester is and whether the user endorses the access request.   
+SCRTSybil is an oracle for credit score checks. The objective of SCRTSybil is to return a quantifiable, yet private and (partially) encrypted credit score for SCRT network users allowing to categorize users by credibility and trustworthiness within the ecosystem. Credit checks will incentivize the activity of new, yet trusted and verified SCRT network users, while also affirming the reputation of long-standing users.
+Users will need to authenticate themselves via a Keplr wallet to access the SCRTSybil Web2 app for starting the scoring process. After completing the necessary steps their score is computed and sent to a smart contract generator which packages their score alongside some basic information that will be encrypted when being published to the network. Users then have their ‘profiles’ stored and accessible on SCRT for anyone to request their credit score by specifying their public address as an identifier/primary key which binds the user account to their score and related attributes of the score. Various key types will decrypt different pieces of information about the users depending on who the score requester is and whether the user endorses the access request.   
  
 ## Problem / Solution  
-How can one validate the trustworthiness of blockchain users, while maintaining user privacy? Our project focuses on building a SCRT oracle, called SCRTSybil, for credit scoring, using Web2 apps for acquiring the data to calculate a score and Web3 (SCRT network) for storing, encrypting and making the score available to the world.  We will build TLS connections from on-chain validator enclaves to APIs, creating private credit check scores for secret contracts. These APIs will aggregate a user’s credit data from web3 (wallet balance and transaction history in one of at least 2 cryptocurrency exchange platforms where they have an account, e.g., Coinbase, Binance, etc.) with web2 data (bank account balance, credit history, recent activity, liquidity, etc. via Plaid). The credit check outcome will be quantified via a credit scoring algorithm which we will build based on an initially simple criteria. This algorithm integrates web2 and web3 validation of a user’s financial standing and history. Validated private data feed, i.e., the actual credit score will be stored on-chain and can be accessed via a privately issued SCRT key. 
+How can one validate the trustworthiness of blockchain users, while maintaining user privacy? Our project focuses on building a SCRT oracle, called SCRTSybil, for credit scoring, using Web2 apps for acquiring the data to calculate a score and Web3 (SCRT network) for storing, encrypting and making the score available to the world.  We will build TLS connections from on-chain validator enclaves to APIs, creating private credit check scores for secret contracts. These APIs will aggregate a user’s credit data from web3 (wallet balance and transaction history on a cryptocurrency exchange like Coinbase) with web2 data (bank account balance, credit history, recent activity, liquidity, etc. via Plaid). The credit check outcome will be quantified via a credit scoring algorithm which we will build based on an initially simple criteria. This algorithm integrates web2 and web3 validation of a user’s financial standing and history. Validated private data feed, i.e., the actual credit score will be stored on-chain and can be accessed via a privately issued SCRT key. 
 
 ## Detailed Product Description 
 
@@ -21,9 +21,9 @@ SCRTSybil Architecture
 
 #### Components
 
-1. **GUI**: user logs into SCRTSybil web application by authenticating with an existing wallet such as Keplr or Ledger. A user should therefore have a wallet + SCRT public address with some minimum balance (TBD) in order to proceed in calculating a credit score for themselves. Once logged into SCRTSybil, a user will be able to create a lightweight profile and view their account balance. The core purpose of the web app however is to provide users with a < 60 second experience, guided by a wizard, whereby they can authenticate with the SCRTSybil-integrated 3rd parties e.g. Plaid, which then computes their score. Their score (and historical scores will be stored in the web app (ReactJS)
+1. **GUI**: user logs into SCRTSybil web application by authenticating with an existing Keplr wallet. The SCRT network offers investors a range of wallets: Ledger, Math Wallet, Keplr. We chose Keplr because it's the first and leading wallet enabled for Inter-Blockchain Communication in the Cosmos ecosystem, it is widely used, and it offers a conventient Google Chrome plugin. A user should therefore own a Kepler wallet + SCRT public address with some minimum balance (TBD) in order to proceed in calculating a credit score for themselves. Once logged into SCRTSybil, a user will be able to create a lightweight profile and view their account balance. The core purpose of the web app however is to provide users with a rapid (< 3 minutes) experience, guided by a wizard, whereby they can authenticate with the SCRTSybil-integrated 3rd parties e.g. Plaid, which then computes their score. The credit score algorithm, coded in Python, will be executed off-chain and then will be compiled into a CosmWasm smart contract to be written on-chain. If a user wants to issue multiple credit scores at different times, then we will interact with the contract initialized at the start to append the new score to pre-existing ones. 
 
-2. **Restful API**: Python (Flask) + webhook framework with public APIs that can be used. The SCRTSybil API is the heartbeat through which data transfer is taking place both from interacting with 3rd party SDKs but also for passing on retrieved data to the credit scoring module. Note that the goal is not to store any sensitive data, but rather store the computed score and encrypted sources of data on SCRT.
+2. **Restful API**: Python (Flask) + webhook framework with public APIs that can be used. The SCRTSybil API is the heartbeat through which data transfer is taking place both from interacting with 3rd party SDKs but also for passing on retrieved data to the credit scoring module. 
 
 3. **Credit Score Module**: credit score algorithm integrating at least these 5 weighted metrics. Metrics were adapted from the factors used by the three largest American consumer credit reporting agencies: Equifax, Experian, and TransUnion.
 Transaction History (txn counts + txn volume)
@@ -33,9 +33,7 @@ Length of account history
 Recent (last 21 days) account activity
 A machine learning module will be built with SciKit-Learn Python library + Flask for web framework. Output score on 300-900 non-linear numerical scale with associated qualitative scale: Excellent/Good/Fair/Below average/Poor.
 
-4. **Smart Contract Compiler**: With the support of CosmWasm, this compiler will process statements written in Python and turn them into smart contracts in Rust. We see this as a potentially super reproducible open-source micro project to help bridge the gap for non-Rust developers in producing low-code smart contracts on SCRT.
-
-5. **Node**: The node will be built on Raspberry Pi 4 (8GB) + 120GB storage computer and managed in Dockerized environments with the hardware installed on-site. The node setup will all be open-sourced. (OPTIONAL)
+4. **Smart Contract Compiler**: With the support of CosmWasm, this compiler will process statements written in Python and turn them into smart contracts in Rust. We see this as a potentially super reproducible open-source micro project to help bridge the gap for non-Rust developers in producing low-code smart contracts on SCRT. The encrypted data we'll write to the SCRT blockchain via smart contract includes: numerical score, quantitative score, public Key of kelpr wallet, timestamp, validators used to compute the score (e.g., Plaid and Coinbase), and the data used to compute the score.
  
 ## Go-to-Market plan
 We are building a credit scoring tool on SCRT as base-layer infrastructure for a series of use cases where individuals or businesses may verify potential customers for extending credit, P2P lending, or vetting a potential employee with financial background checks.
@@ -48,7 +46,7 @@ The go-to-market plan is two-fold:
 Our core goal is to initially provide tools for building financial ecosystems on SCRT as the network gains traffic and user adoption. We believe in the value of having a public network with the option and flexibility of data encryption and ultimately believe that mainstream tools for financial services like credit scores will be of the first major requirements for service providers on SCRT.  
  
 ## Value capture for Secret Network ecosystem
-A credit check oracle is both a clear value proposition for existing SCRT holders and an incentive for new or prospective users. First, a SCRT credit check oracle will increase Secret Network usability by validating users’ reputation (measured in terms of credit check), and thus will create trust toward users who have been verified by the oracle. Secondly, the oracle promotes interoperability and accessibility for the Secret Network by connecting the chain to crypto exchange platforms. Lastly, SCRTSybil enriches the ecosystem by leveraging on the privacy-preserving smart contracts which are distinctive of the Secret network. We believe the community needs a credit check oracle as soon as possible. SCRTSybil aims to provide that. 
+A credit check oracle is both a clear value proposition for existing SCRT holders and an incentive for new or prospective users. First, a SCRT credit check oracle will increase Secret Network usability by validating users’ reputation (measured in terms of a credit check), and thus will create trust toward users who have been verified by the oracle. Secondly, the oracle promotes interoperability and accessibility for the Secret Network by connecting the chain to crypto exchange platforms. Thirdly, this oracle constitutes a credit scoring service to web2 users, specifically those users who are still unaware of the potential of the SCRT blockchain, yet under their need to use the SCRTSybil oracle will now open a Keplr wallet. Fourthly, the Sybil has the potential to expand from the SCRT community to the vast Ethereum community as well. Although the Sybil is built on SCRT network infrastructure, realistically it can provide credit score checks to any web3 user, because our credit scoring module fetches data from an exchange like Coinbase (which supports trading of over 100 cryptocurrencies) and thus we are capable to generate credit scores to ETH users too. Lastly, SCRTSybil enriches the SCRT ecosystem by leveraging on the privacy-preserving smart contracts which are distinctive of the Secret network. We believe the community needs a credit check oracle as soon as possible. SCRTSybil aims to provide that. 
  
 ## Team Members
 * Michael Brink
@@ -109,7 +107,7 @@ We would be willing to consider part payment in SCRT, BTC or ETH, up to 50%. The
 
 *Initial amount at grant issuance: 22,500 USD
  
-### Milestone 1 - APIs, Database, Integration, Credit Score Algorithm
+### Milestone 1 - APIs, Integration, Credit Score Algorithm
 - **Estimated duration:** Week 1-6
 - **Costs:** 42,500 USD
 
@@ -118,14 +116,14 @@ We would be willing to consider part payment in SCRT, BTC or ETH, up to 50%. The
 | -----: | ----------- | ------------- |
 | 0a. | License | Apache 2.0 |
 | 0b. | Documentation | Provide inline documentation of the code. |
-| 1. | API module | Build APIs to selected validators (Coinbase, Binance, Plaid, etc.) | 
-| 2. | Database | Set up data dump into PostgreSQL post-fetching. |
+| 1. | API module | Build APIs to selected validators. For this initial grant we will limit our validators to Coinbase & Plaid. | 
+| 2. | Data Cleaning | Set up data flash storage to clean data post-fetching. |
 | 3. | Data Integration | Overlay web2 with web3 validation data for each API. |
-| 3. | ML Module | Deploy an ML model to calculate user credit score. |
+| 4. | ML Module - Build | Build an ML model to calculate user credit score. |
  
  
  
-### Milestone 2 - Node, Smart Contract Compiler
+### Milestone 2 - Smart Contract Compiler
 - **Estimated duration:** Week 7-12
 - **Costs:** 42,500 USD
 
@@ -134,8 +132,9 @@ We would be willing to consider part payment in SCRT, BTC or ETH, up to 50%. The
 | 0a. | License | Apache 2.0 |
 | 0b. | Documentation | We will provide inline documentation of the code. |
 | 0c. | Test Guide | Run unit tests to ensure functionality and robustness of core functions (~70%). |
-| 1. | Node | Spin up SCRT network node via Raspberry Pi 4.  |
-| 2. | Smart Contract Compiler | Write a smart contract in Rust to encrypt the calculated credit score to SCRT chain. |
+| 1. | ML Module - Deploy | Train, test, deploy the ML model and compute credit scores. |
+| 2. | Smart Contract Compiler | Use standard library to build CosmWasm smart contract. |
+| 3. | Write to chain | Execute the smart (Secret) contract, written in Rust, to encrypt the calculated credit score to SCRT chain. |
  
  
 ### Milestone 3 - WebApp: framework + UI 
@@ -148,8 +147,10 @@ We would be willing to consider part payment in SCRT, BTC or ETH, up to 50%. The
 | 0a. | License | Apache 2.0 |
 | 0b. | Documentation | We will provide inline documentation of the code for the WebApp framework. |
 | 1. | Framework | Implement SCRT wallet Login, personal info input, hover+select+OAuth2 in chosen validator |
-| 2. | UI Module | We will refine WebApp aesthetic and functionality. |
-| 3. | Tutorial | We will publish a video tutorial that walks a user through the SCRTSybil WebApp instructing them on how to get their credit score calculated. | 
+| 2. | Flow1: issuer | Design the UI flow for issuing the credit score to a user. | 
+| 3. | Flow2: lender | |Design the UI flow for the third party requesting to view the score prior to lending a service to the credit score issuer. | 
+| 4. | UI Module | We will refine WebApp aesthetic and functionality. |
+| 5. | Tutorial | We will publish a video tutorial that walks a user through the SCRTSybil WebApp instructing them on how to get their credit score calculated. | 
  
  
 ## Additional Information :heavy_plus_sign:
@@ -164,8 +165,8 @@ We would be willing to consider part payment in SCRT, BTC or ETH, up to 50%. The
  
  
 #### Scope and Limitations
-We will develop a simple WebApp for users to retrieve user credit scores. Although we aim to scale up the WebApp for numerous and diverse use cases in the near future, for this first initial grant we will limit the App to three UIs: (1) user login into Secret Network wallet via Ledger or Keplr; (2) enter user’s personal information; (3) choose your preferred web2/web3 validators and calculate your credit score. We mocked up three UI prototypes, one for each page respectively, to give you a clear idea of our vision. Please, find the UI prototypes [here](https://github.com/BalloonBox-Inc/SCRTnetwork_oracle/tree/main/UI%20prototypes).
-Initially, the WebApp for the SCRTSybil Oracle will only allow user authentication to their Secret Network Wallet via Keplr or Ledger. In the future, this can scale to support a range of wallets supporting SCRT.
+We will develop a simple WebApp for users to retrieve user credit scores. Although we aim to scale up the WebApp for numerous and diverse use cases in the near future, for this first initial grant we will limit the App to three UIs: (1) user login into Secret Network wallet via Keplr; (2) enter user’s personal information; (3) choose web2/web3 validators and calculate your credit score. We mocked up three UI prototypes, one for each page respectively, to give you a clear idea of our vision. Please, find the UI prototypes [here](https://github.com/BalloonBox-Inc/SCRTnetwork_oracle/tree/main/UI%20prototypes).
+Initially, the WebApp for the SCRTSybil Oracle will only allow user authentication to their Secret Network Wallet via Keplr. In the future, this can scale to support a range of wallets supporting SCRT (e.g., Ledger, Math Wallet, Citadel.One, Chain or Secrets, Secret Nodes).
  
  
 #### Future Plans
