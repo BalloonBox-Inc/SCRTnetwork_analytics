@@ -26,11 +26,11 @@ SCRTSybil Architecture
 2. **Restful API**: Python (Flask) + webhook framework with public APIs that can be used. The SCRTSybil API is the heartbeat through which data transfer is taking place both from interacting with 3rd party SDKs but also for passing on retrieved data to the credit scoring module. 
 
 3. **Credit Score Module**: credit score algorithm integrating at least these 5 weighted metrics. Metrics were adapted from the factors used by the three largest American consumer credit reporting agencies: Equifax, Experian, and TransUnion.
-Transaction History (txn counts + txn volume)
-Number and types of bank accounts/wallets owned
-Ratio of used liquidity / available liquidity for each account
-Length of account history
-Recent (last 21 days) account activity
+- Transaction History (txn counts + txn volume)
+- Number and types of bank accounts/wallets owned
+- Ratio of used liquidity / available liquidity for each account
+- Length of account history
+- Recent (last 21 days) account activity
 A machine learning module will be built with SciKit-Learn Python library + Flask for web framework. Output score on 300-900 non-linear numerical scale with associated qualitative scale: Excellent/Good/Fair/Below average/Poor.
 
 4. **Smart Contract Compiler**: With the support of CosmWasm, this compiler will process statements written in Python and turn them into smart contracts in Rust. We see this as a potentially super reproducible open-source micro project to help bridge the gap for non-Rust developers in producing low-code smart contracts on SCRT. The encrypted data we'll write to the SCRT blockchain via smart contract includes: numerical score, quantitative score, public Key of kelpr wallet, timestamp, validators used to compute the score (e.g., Plaid and Coinbase), and the data used to compute the score.
