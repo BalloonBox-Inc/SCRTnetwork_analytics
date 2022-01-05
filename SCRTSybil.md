@@ -22,20 +22,20 @@ SCRTSybil Architecture
 #### Components
 
 1. **GUI**: user logs into SCRTSybil web application by authenticating with an existing wallet such as Keplr or Ledger. A user should therefore have a wallet + SCRT public address with some minimum balance (TBD) in order to proceed in calculating a credit score for themselves. Once logged into SCRTSybil, a user will be able to create a lightweight profile and view their account balance. The core purpose of the web app however is to provide users with a < 60 second experience, guided by a wizard, whereby they can authenticate with the SCRTSybil-integrated 3rd parties e.g. Plaid, which then computes their score. Their score (and historical scores will be stored in the web app (ReactJS)
- 
+
 2. **Restful API**: Python (Flask) + webhook framework with public APIs that can be used. The SCRTSybil API is the heartbeat through which data transfer is taking place both from interacting with 3rd party SDKs but also for passing on retrieved data to the credit scoring module. Note that the goal is not to store any sensitive data, but rather store the computed score and encrypted sources of data on SCRT.
- 
-3. **Credit Score Module**: credit score algorithm integrating at least these 5 weighted metrics. Metrics were adapted from the factors used by the three largest American consumer credit reporting agencies: Equifax, Experian, and TransUnion. 
-Transaction History (txn counts + txn volume) 
+
+3. **Credit Score Module**: credit score algorithm integrating at least these 5 weighted metrics. Metrics were adapted from the factors used by the three largest American consumer credit reporting agencies: Equifax, Experian, and TransUnion.
+Transaction History (txn counts + txn volume)
 Number and types of bank accounts/wallets owned
 Ratio of used liquidity / available liquidity for each account
 Length of account history
 Recent (last 21 days) account activity
 A machine learning module will be built with SciKit-Learn Python library + Flask for web framework. Output score on 300-900 non-linear numerical scale with associated qualitative scale: Excellent/Good/Fair/Below average/Poor.
- 
+
 4. **Smart Contract Compiler**: With the support of CosmWasm, this compiler will process statements written in Python and turn them into smart contracts in Rust. We see this as a potentially super reproducible open-source micro project to help bridge the gap for non-Rust developers in producing low-code smart contracts on SCRT.
- 
-5. **Node**: The node will be built on Raspberry Pi 4 (8GB) + 120GB storage computer and managed in Dockerized environments with the hardware installed on-site. The node setup will all be open-sourced.
+
+5. **Node**: The node will be built on Raspberry Pi 4 (8GB) + 120GB storage computer and managed in Dockerized environments with the hardware installed on-site. The node setup will all be open-sourced. (OPTIONAL)
  
 ## Go-to-Market plan
 We are building a credit scoring tool on SCRT as base-layer infrastructure for a series of use cases where individuals or businesses may verify potential customers for extending credit, P2P lending, or vetting a potential employee with financial background checks.
@@ -97,7 +97,7 @@ Our team consists of the following roles:
 
 - **Total Estimated Duration:** 16 weeks
 - **Full-Time Equivalent (FTE):** 3.5
-- **Total Costs:** 175,000 USD
+- **Total Costs:** 125,000 USD
 
 
 Our team will require ~4 months to complete this project. We intend to have 2 developers full-time, 2 data scientists full-time, and 1 UX/UI designer part-time, a product architect, and a project manager. We can receive payments in 4 disbursements, one at the beginning of the grant, three after completion of each milestone.
@@ -106,10 +106,12 @@ We would be willing to consider part payment in SCRT, BTC or ETH, up to 50%. The
 - BTC address: bc1qz36smg7zg9d2de7qurj9a49fetemavta39a9zp
 - ETH address: 0x3ffA0e66091742a867430D140E36826c06ba19Be
 - SCRT address: secret18qeg7lx63wkqvy9e295slufvch5rfel2v23tsu
+
+*Initial amount at grant issuance: 22,500 USD
  
 ### Milestone 1 - APIs, Database, Integration, Credit Score Algorithm
 - **Estimated duration:** Week 1-6
-- **Costs:** 52,500 USD
+- **Costs:** 42,500 USD
 
 
 | Number | Deliverable | Specification |
@@ -125,7 +127,7 @@ We would be willing to consider part payment in SCRT, BTC or ETH, up to 50%. The
  
 ### Milestone 2 - Node, Smart Contract Compiler
 - **Estimated duration:** Week 7-12
-- **Costs:** 52,500 USD
+- **Costs:** 42,500 USD
 
 | Number | Deliverable | Specification |
 | -----: | ----------- | ------------- |
