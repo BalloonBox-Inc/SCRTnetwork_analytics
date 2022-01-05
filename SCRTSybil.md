@@ -26,6 +26,7 @@ SCRTSybil Architecture
 2. **Restful API**: Python (Flask) + webhook framework with public APIs that can be used. The SCRTSybil API is the heartbeat through which data transfer is taking place both from interacting with 3rd party SDKs but also for passing on retrieved data to the credit scoring module. 
 
 3. **Credit Score Module**: credit score algorithm integrating at least these 5 weighted metrics. Metrics were adapted from the factors used by the three largest American consumer credit reporting agencies: Equifax, Experian, and TransUnion.
+
 * Transaction History (txn counts + txn volume)
 * Number and types of bank accounts/wallets owned
 * Ratio of used liquidity / available liquidity for each account
