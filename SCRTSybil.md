@@ -136,7 +136,7 @@ We would be willing to consider part payment in SCRT, BTC or ETH, up to 50%. The
 | 0c. | Test Guide | Run unit tests to ensure functionality and robustness of core functions (~70%). |
 | 1. | ML Module - Deploy | Train, test, deploy the ML model and compute credit scores. |
 | 2. | Smart Contract Compiler | Use standard library to build CosmWasm smart contract. |
-| 3. | Write to chain | Execute the smart (Secret) contract, written in Rust, to encrypt the calculated credit score to SCRT chain. |
+| 3. | Write to chain | Execute the smart contract, written in Rust, to encrypt the calculated credit score to SCRT chain. |
  
  
 ### Milestone 3 - WebApp: framework + UI 
