@@ -31,6 +31,7 @@ SCRTSybil Architecture
 - Ratio of used liquidity / available liquidity for each account
 - Length of account history
 - Recent (last 21 days) account activity
+
 A machine learning module will be built with SciKit-Learn Python library + Flask for web framework. Output score on 300-900 non-linear numerical scale with associated qualitative scale: Excellent/Good/Fair/Below average/Poor.
 
 4. **Smart Contract Compiler**: With the support of CosmWasm, this compiler will process statements written in Python and turn them into smart contracts in Rust. We see this as a potentially super reproducible open-source micro project to help bridge the gap for non-Rust developers in producing low-code smart contracts on SCRT. The encrypted data we'll write to the SCRT blockchain via smart contract includes: numerical score, quantitative score, public Key of kelpr wallet, timestamp, validators used to compute the score (e.g., Plaid and Coinbase), and the data used to compute the score.
