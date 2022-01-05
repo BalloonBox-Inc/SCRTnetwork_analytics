@@ -149,8 +149,8 @@ We would be willing to consider part payment in SCRT, BTC or ETH, up to 50%. The
 | 0a. | License | Apache 2.0 |
 | 0b. | Documentation | We will provide inline documentation of the code for the WebApp framework. |
 | 1. | Framework | Implement SCRT wallet Login, personal info input, hover+select+OAuth2 in chosen validator |
-| 2. | Flow1: issuer | Design the UI flow for issuing the credit score to a user. | 
-| 3. | Flow2: lender | Design the UI flow for the third party requesting to view the score prior to lending a service to the credit score issuer. | 
+| 2. | UI Flow1: issuer | Design the UI flow for issuing the credit score to a user. | 
+| 3. | UI Flow2: lender | Design the UI flow for the third party requesting to view the score prior to lending a service to the credit score issuer. | 
 | 4. | UI Module | We will refine WebApp aesthetic and functionality. |
 | 5. | Tutorial | We will publish a video tutorial that walks a user through the SCRTSybil WebApp instructing them on how to get their credit score calculated. | 
  
