@@ -35,6 +35,11 @@ SCRTSybil Architecture
 Both a score matrix and a machine learning module will be built with SciKit-Learn Python library + Flask for web framework. The output returns two fields: a numerical score on 300-900 non-linear numerical scale and its associated qualitative quantifier: Excellent/Good/Fair/Below average/Poor.
 
 4. **Smart Contract Compiler**: with the support of CosmWasm or Secret's adapted compiler, this compiler will process statements written in Python and turn them into smart contracts in Rust. We see this as a potentially super reproducible open-source micro project to help bridge the gap for non-Rust developers in producing low-code smart contracts on SCRT. The encrypted data we'll write to the SCRT blockchain via smart contract includes numerical score, quantitative score, public Key of Kelpr wallet, timestamp, validators used to compute the score (e.g., Plaid and Coinbase), and the data used to compute the score. Since we want to leverage the privacy-preserving uniqueness of the SCRT network, we aim to store users' data on-chain encrypting it in a secret contract. No user data will be stored offchain. Local storage will only be used for score computation with the raw data + score entirely written to the blockchain via smart contract. This eliminates the need for an off-chain DB, which would require maintenance and would challenge data privacy and ownership of the user.
+
+Below is a high level design explaining smart contract compilation and interaction:
+
+![SCRTSybil smartcontract](https://github.com/BalloonBox-Inc/SCRTnetwork_oracle/blob/main/images/contractInteraction.png)
+
  
 ## Go-to-Market plan
 We are building a credit scoring tool on SCRT as base-layer infrastructure for a series of use cases where individuals or businesses may verify potential customers for extending credit, P2P lending, or vetting a potential employee with financial background checks.
